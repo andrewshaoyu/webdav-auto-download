@@ -5,6 +5,6 @@ RUN go mod tidy
 RUN go build -o webdav-manager
 
 
-FROM docker.io/alpine
+FROM golang:latest
 COPY  --from=builder /app/webdav-manager /webdav-manager
 ENTRYPOINT ["./webdav-manager"]
