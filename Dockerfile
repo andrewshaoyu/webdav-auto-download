@@ -1,9 +1,10 @@
 FROM golang:latest as builder
-COPY ./ ./
-RUN go build
+WORKDIR /app
+COPY ./ /app
+RUN go mod tidy
+RUN go build -o webdav-manager
 
 
 FROM docker.io/alpine
-COPY  --from=builder /webdav-manager webdev-manager
-
-ENTRYPOINT ["./webdev-manager"]
+COPY  --from=builder /app/webdav-manager /webdav-manager
+ENTRYPOINT ["./webdav-manager"]
